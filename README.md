@@ -1,0 +1,93 @@
+# Python CLI Scaffold
+
+A modern, batteries-included scaffold for building robust Python CLI tools.
+
+## Goals
+
+- Clean `src/` layout with typed package
+- Typer-based CLI with Rich output
+- Structured logging (console + rotating file logs)
+- Pydantic settings with `.env` support
+- Fast lint/format via Ruff
+- Static typing via mypy
+- Tests via pytest + coverage
+- Pre-commit hooks
+
+## Quick Start
+
+```bash
+# Create venv and install
+uv sync --group dev
+
+# Run the CLI
+uv run python-cli --help
+
+# Run tests
+uv run pytest
+
+# Lint & format
+uv run ruff check .
+uv run ruff format .
+```
+
+## Project Layout
+
+```
+python-cli/
+├── src/python_cli/         # Package code
+│   ├── cli.py              # Typer app & commands
+│   ├── config.py           # Settings (env + .env)
+│   ├── logging.py          # Loguru config
+│   ├── errors.py           # Custom exceptions
+│   ├── utils.py            # Shared helpers
+│   ├── commands/           # Subcommands
+│   └── __main__.py         # python -m python_cli
+├── tests/                  # Pytest
+├── docs/                   # Docs
+├── pyproject.toml           # Build + tooling config
+└── research.md             # Analysis of prior CLIs
+```
+
+## Environment Configuration
+
+Copy `.env.example` to `.env` and fill values. The config loader looks in:
+
+1. Current working directory
+2. User home directory
+
+## Packaging
+
+Build a wheel:
+
+```bash
+uv build --wheel
+```
+
+Install as a tool:
+
+```bash
+uv tool install --editable .
+```
+
+## License
+
+MIT
+
+## TDD (Red/Green/Refactor)
+
+We use strict red/green/refactor. Add a failing test first, make it pass, then refactor.
+
+
+## Build (PyInstaller)
+
+`ash
+uv sync --group build
+uv run pyinstaller --clean --onefile --name python-cli python-cli.spec
+` 
+
+See docs/build.md for details.
+
+## CI
+
+GitHub Actions runs lint, type-check, and tests on push/PR.
+
