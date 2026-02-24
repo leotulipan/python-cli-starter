@@ -69,6 +69,29 @@ Install as a tool:
 uv tool install --editable .
 ```
 
+## Renaming From `python-cli`
+
+If you use this repo as a starter, search/replace `python-cli` and rename the following paths so the package, binary, and build artifacts match your new name:
+
+Files that reference `python-cli`:
+- `install.sh`
+- `pyproject.toml` (project name + console script entry point)
+- `python-cli.spec` (PyInstaller spec)
+- `README.md` (examples + layout)
+- `docs/build.md`
+- `scripts/build_exe.ps1`
+- `scripts/build_exe.sh`
+- `src/python_cli/cli.py` (version banner)
+- `src/python_cli/logging.py` (default log dir + file name)
+- `tests/test_cli.py` (asserted output)
+- `.github/workflows/ci.yml` (working directory)
+
+Directories and files to rename when you change the project name:
+- Repo root folder `python-cli/`
+- Package folder `src/python_cli/` and import references to `python_cli`
+- PyInstaller spec file `python-cli.spec`
+- Optional: default log folder `~/.python-cli/` in `src/python_cli/logging.py` (if you want a new log path)
+
 ## License
 
 MIT
