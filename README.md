@@ -91,3 +91,14 @@ See docs/build.md for details.
 
 GitHub Actions runs lint, type-check, and tests on push/PR.
 
+
+## TDD Loop
+
+Use either Make or just to run the Red/Green/Refactor loop:
+
+`ash
+make tdd
+# or
+just tdd
+` 
+
