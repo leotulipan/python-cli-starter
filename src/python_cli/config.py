@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
-from pydantic import Field, SecretStr
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-def _find_env_file() -> Optional[Path]:
+def _find_env_file() -> Path | None:
     cwd_env = Path.cwd() / ".env"
     if cwd_env.exists():
         return cwd_env
@@ -26,7 +25,7 @@ class Settings(BaseSettings):
 
     app_env: str = Field(default="dev", validation_alias="APP_ENV")
     log_level: str = Field(default="INFO", validation_alias="LOG_LEVEL")
-    data_dir: Optional[Path] = Field(default=None, validation_alias="DATA_DIR")
+    data_dir: Path | None = Field(default=None, validation_alias="DATA_DIR")
 
     model_config = SettingsConfigDict(
         env_file=str(_find_env_file()) if _find_env_file() else None,

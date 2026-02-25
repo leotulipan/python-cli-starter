@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 import typer
-from rich.console import Console
 from loguru import logger
+from rich.console import Console
 
+from python_cli.commands.hello import hello
 from python_cli.config import get_settings
 from python_cli.errors import AppError
 from python_cli.logging import configure_logging
 from python_cli.version import __version__
-from python_cli.commands.hello import hello
 
 app = typer.Typer(no_args_is_help=True, help="Generic Python CLI scaffold")
 console = Console()
