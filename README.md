@@ -13,21 +13,44 @@ A modern, batteries-included scaffold for building robust Python CLI tools.
 - Tests via pytest + coverage
 - Pre-commit hooks
 
-## Quick Start
+## Start a New Project From This Template
 
 ```bash
-# Create venv and install
+# 1. Clone without the template's git history
+git clone --depth=1 https://github.com/<you>/python-cli.git my-tool
+cd my-tool
+rm -rf .git
+git init
+
+# 2. Install deps
 uv sync --group dev
 
-# Run the CLI
-uv run python-cli --help
+# 3. Rename the package and fill in pyproject metadata
+#    (prompts for description, author, email, repo URL — defaults pulled from git config)
+uv run python init.py my-tool --dry-run   # preview
+uv run python init.py my-tool --commit    # apply + initial commit
 
-# Run tests
+# 4. Verify
 uv run pytest
+uv run my-tool --help
+```
 
-# Lint & format
-uv run ruff check .
-uv run ruff format .
+After this, push to your own remote:
+
+```bash
+git remote add origin git@github.com:<you>/my-tool.git
+git push -u origin main
+```
+
+## Everyday Commands
+
+```bash
+uv sync --group dev        # install/update deps
+uv run python-cli --help   # run the CLI
+uv run pytest              # tests
+uv run ruff check .        # lint
+uv run ruff format .       # format
+uv run mypy src            # type-check
 ```
 
 ## Project Layout
@@ -67,15 +90,6 @@ Install as a tool:
 
 ```bash
 uv tool install --editable .
-```
-
-## Renaming From `python-cli`
-
-Preview changes first with `--dry-run`, then run for real:
-
-```bash
-python init.py my-tool --dry-run
-python init.py my-tool
 ```
 
 ## License
