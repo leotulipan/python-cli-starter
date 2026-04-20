@@ -32,3 +32,10 @@ Thumbs.db
 desktop.ini
 Desktop.ini
 
+# Claude Code workspace (ignore everything except tracked plans)
+.claude/
+!.claude/plans/
+!.claude/plans/*.md
+
+# Windows CMD stray-redirect foot-gun
+nul

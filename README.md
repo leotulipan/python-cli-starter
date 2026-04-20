@@ -71,16 +71,11 @@ uv tool install --editable .
 
 ## Renaming From `python-cli`
 
-Run the init script with your new project name:
-
-```bash
-python init.py my-tool
-```
-
-Preview changes first with `--dry-run`:
+Preview changes first with `--dry-run`, then run for real:
 
 ```bash
 python init.py my-tool --dry-run
+python init.py my-tool
 ```
 
 ## License

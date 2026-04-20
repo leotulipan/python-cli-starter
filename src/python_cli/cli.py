@@ -16,15 +16,24 @@ app = typer.Typer(no_args_is_help=True, help="Generic Python CLI scaffold")
 console = Console()
 
 
-@app.callback()
-def main(
-    version: bool = typer.Option(False, "--version", help="Show version and exit"),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging"),
-) -> None:
-    if version:
+def _version_callback(value: bool) -> None:
+    if value:
         console.print(f"python-cli {__version__}")
         raise typer.Exit()
 
+
+@app.callback()
+def main(
+    version: bool = typer.Option(
+        False,
+        "--version",
+        "-V",
+        callback=_version_callback,
+        is_eager=True,
+        help="Show version and exit",
+    ),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging"),
+) -> None:
     settings = get_settings()
     log_level = "DEBUG" if verbose else settings.log_level
     configure_logging(log_level)
@@ -40,10 +49,8 @@ def greet(name: str = typer.Argument(..., help="Name to greet")) -> None:
 @app.command()
 def fail() -> None:
     """Example of a controlled error."""
-    raise AppError("Something went wrong", exit_code=2)
-
-
-@app.exception_handler(AppError)
-def handle_app_error(request: typer.Request, exc: AppError) -> None:  # type: ignore[valid-type]
-    logger.error(exc.message)
-    raise typer.Exit(exc.exit_code)
+    try:
+        raise AppError("Something went wrong", exit_code=2)
+    except AppError as exc:
+        logger.error(exc.message)
+        raise typer.Exit(exc.exit_code) from None
