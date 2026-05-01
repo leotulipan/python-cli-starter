@@ -39,3 +39,6 @@ Desktop.ini
 
 # Windows CMD stray-redirect foot-gun
 nul
+
+# Git worktree checkout directory
+.worktree/
